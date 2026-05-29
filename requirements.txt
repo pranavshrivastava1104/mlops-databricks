@@ -1,0 +1,27 @@
+# Core data science
+pandas
+numpy
+scikit-learn
+
+# MLflow tracking and model registry
+mlflow
+
+# Hyperparameter optimization
+optuna
+
+# Databricks SDK for workspace/jobs/model serving APIs
+databricks-sdk
+
+# YAML parsing for config files
+pyyaml
+
+# Testing
+pytest
+
+# Notebook support
+ipykernel
+jupyter
+
+# Visualization
+matplotlib
+seaborn
