@@ -1,5 +1,5 @@
 dev:
-  catalog_name: bank_dev
+  catalog_name: bank
   schema_name: bank_marketing
 
 acc:
