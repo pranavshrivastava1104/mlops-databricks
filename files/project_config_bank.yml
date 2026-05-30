@@ -1,0 +1,39 @@
+dev:
+  catalog_name: bank_dev
+  schema_name: bank_marketing
+
+acc:
+  catalog_name: bank_acc
+  schema_name: bank_marketing
+
+prd:
+  catalog_name: bank_prd
+  schema_name: bank_marketing
+
+target: y_flag
+experiment_name: /Shared/bank-marketing-subscription
+
+parameters:
+  learning_rate: 0.01
+  n_estimators: 500
+  max_depth: 6
+
+num_features:
+  - age
+  - balance
+  - day
+  - duration
+  - campaign
+  - pdays
+  - previous
+
+cat_features:
+  - job
+  - marital
+  - education
+  - default
+  - housing
+  - loan
+  - contact
+  - month
+  - poutcome

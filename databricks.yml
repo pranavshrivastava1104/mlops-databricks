@@ -1,9 +1,20 @@
-# This is a Declarative Automation Bundle definition for mlops_databricks.
-# The Databricks extension requires databricks.yml configuration file.
-# See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
-
 bundle:
-  name: mlops_databricks
+  name: bank-marketing-mlops
+
+include:
+  - resources/*
+
+artifacts:
+  default:
+    type: whl
+    build: uv build
+    path: .
+
+variables:
+  git_sha:
+    default: "none"
+  schedule_pause_status:
+    default: "PAUSED"
 
 targets:
   dev:
@@ -12,8 +23,17 @@ targets:
     workspace:
       host: https://dbc-a44dcc07-4f2a.cloud.databricks.com
 
-  ## Optionally, there could be 'staging' or 'prod' targets here.
-  #
-  # prod:
+  # acc:
   #   workspace:
   #     host: https://dbc-a44dcc07-4f2a.cloud.databricks.com
+  #   root_path: /Shared/.bundle/${bundle.target}/${bundle.name}
+  #   variables:
+  #     schedule_pause_status: "PAUSED"
+
+  # prd:
+  #   mode: production
+  #   workspace:
+  #     host: https://dbc-a44dcc07-4f2a.cloud.databricks.com
+  #   root_path: /Shared/.bundle/${bundle.target}/${bundle.name}
+  #   variables:
+  #     schedule_pause_status: "PAUSED"
