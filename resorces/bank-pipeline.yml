@@ -1,0 +1,10 @@
+resources:
+  jobs:
+    bank-marketing-pipeline:
+      name: ${bundle.name}-pipeline
+
+      tags: project:bank-marketing
+      schedule:
+         quartz_cron_expression: "0 0 6 ? * MON"
+         timezone-id: "Asia/Kolkata"
+         pause_status: ${var.schedule_pause_status}
