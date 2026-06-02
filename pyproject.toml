@@ -1,6 +1,6 @@
 [build-system]
 requires = ["setuptools>=68", "wheel"]
-build-backend = "setuptools.backends.legacy:build"
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "bank-marketing"
@@ -11,6 +11,7 @@ dependencies = [
   "scikit-learn==1.6.1",
   "lightgbm==4.5.0",
   "databricks-sdk==0.44.0",
+  "databricks-feature-engineering",
   "pydantic==2.10.6",
   "loguru==0.7.3",
   "python-dotenv==1.0.1",

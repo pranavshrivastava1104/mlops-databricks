@@ -1,0 +1,30 @@
+resources:
+  jobs:
+    bank-marketing-pipeline:
+      name: ${bundle.name}-pipeline
+
+      tags:
+        project: bank-marketing
+
+      schedule:
+        quartz_cron_expression: "0 0 6 ? * MON"
+        timezone_id: "Asia/Kolkata"
+        pause_status: ${var.schedule_pause_status}
+
+      environments:
+        - environment_key: default
+          spec:
+            client: "3"
+            dependencies:
+              - ../dist/*.whl
+
+      tasks:
+        - task_key: preprocessing
+          environment_key: default
+          spark_python_task:
+            python_file: ../Scripts/process_data.py
+            parameters:
+              - "--root-path"
+              - "${workspace.root_path}"
+              - "--env"
+              - "${bundle.target}"

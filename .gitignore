@@ -9,3 +9,8 @@ mlruns/
 artifacts/
 models/
 files/data/
+
+*.egg-info/
+.eggs/
+build/
+dist/
