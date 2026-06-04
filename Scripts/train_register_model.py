@@ -123,6 +123,24 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+def resolve_config_path(root_path: str) -> Path:
+    candidates = [
+        Path(root_path) / "files" / "files" / "project_config_bank.yml",
+        Path(root_path) / "files" / "project_config_bank.yml",
+        Path(root_path) / "project_config_bank.yml",
+    ]
+
+    for candidate in candidates:
+        if candidate.exists():
+            return candidate
+
+    searched = ", ".join(str(candidate) for candidate in candidates)
+    raise FileNotFoundError(
+        "Could not find project_config_bank.yml. "
+        f"Searched: {searched}"
+    )
+
+
 def main() -> None:
     """
     Main entry point for Phase 4 Step 2.
@@ -149,7 +167,7 @@ def main() -> None:
         f"job_run_id={args.job_run_id}"
     )
 
-    config_path = Path(args.root_path) / "files" / "project_config_bank.yml"
+    config_path = resolve_config_path(args.root_path)
 
     logger.info(f"Loading config from: {config_path}")
 
@@ -194,8 +212,7 @@ def main() -> None:
 
     logger.info("Checking whether candidate model improved.")
 
-    # Your current BasicModel.model_improved accepts new_version,
-    # but it compares using self.metrics and champion alias.
+    # model_improved compares self.metrics against the current latest-model alias.
     # We pass 0 here because the candidate is not registered yet.
     improved = model.model_improved(new_version=0)
 

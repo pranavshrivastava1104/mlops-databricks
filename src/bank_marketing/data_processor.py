@@ -106,11 +106,11 @@ class DataProcessor:
     def split_data(self) -> tuple[pd.DataFrame, pd.DataFrame]:
         """
         80/20 stratified split — same pattern as your mlflow_model_training notebook.
-        Puts y_flag back into both sets so the table is self-contained.
+        Keeps ALL columns (raw + engineered) so the train/test tables are
+        self-contained and usable by BasicModel without re-engineering.
         """
-        feature_cols = self.config.num_features + self.config.cat_features
-        X = self.df[feature_cols]
         y = self.df[self.config.target]
+        X = self.df.drop(columns=[self.config.target])
 
         X_train, X_test, y_train, y_test = train_test_split(
             X, y,

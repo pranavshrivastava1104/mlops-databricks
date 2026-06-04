@@ -8,8 +8,13 @@ version = "0.1.0"
 requires-python = ">=3.12, <3.13"
 dependencies = [
   "mlflow==2.19.0",
+  "cloudpickle==3.0.0",
+  "numpy==1.26.4",
+  "pandas==2.2.3",
+  "scipy==1.13.1",
   "scikit-learn==1.6.1",
   "lightgbm==4.5.0",
+  "xgboost==2.1.4",
   "databricks-sdk==0.44.0",
   "databricks-feature-engineering",
   "pydantic==2.10.6",

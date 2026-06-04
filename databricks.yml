@@ -13,6 +13,10 @@ artifacts:
 variables:
   git_sha:
     default: "none"
+
+  branch:
+    default: "local"
+
   schedule_pause_status:
     default: "PAUSED"
 

@@ -28,3 +28,42 @@ resources:
               - "${workspace.root_path}"
               - "--env"
               - "${bundle.target}"
+
+        - task_key: train_model
+          depends_on:
+            - task_key: preprocessing
+          environment_key: default
+          spark_python_task:
+            python_file: ../Scripts/train_register_model.py
+            parameters:
+              - "--root-path"
+              - "${workspace.root_path}"
+              - "--env"
+              - "${bundle.target}"
+              - "--git-sha"
+              - "${var.git_sha}"
+              - "--branch"
+              - "${var.branch}"
+              - "--job-run-id"
+              - "{{job.run_id}}"
+
+        - task_key: model_updated_check
+          depends_on:
+            - task_key: train_model
+          condition_task:
+            op: EQUAL_TO
+            left: "{{tasks.train_model.values.model_updated}}"
+            right: "1"
+
+        - task_key: deploy_model
+          depends_on:
+            - task_key: model_updated_check
+              outcome: "true"
+          environment_key: default
+          spark_python_task:
+            python_file: ../Scripts/deploy_model.py
+            parameters:
+              - "--root-path"
+              - "${workspace.root_path}"
+              - "--env"
+              - "${bundle.target}"
