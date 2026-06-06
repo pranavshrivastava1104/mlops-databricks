@@ -1,0 +1,22 @@
+# exploratory notebooks — not part of the production bundle
+notebooks/
+
+# built artifacts — uploaded separately as wheel
+dist/
+*.whl
+*.egg-info/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# virtual environment
+.venv/
+
+# local data files
+files/data/
+
+# IDE files
+.vscode/
+.idea/

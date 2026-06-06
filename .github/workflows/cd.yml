@@ -1,0 +1,38 @@
+name: CD pipeline
+
+on: 
+  push: 
+    branches:
+      - main
+  workflow_dispatch: 
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    strategy: 
+      matrix:
+        environment: [acc,prd]
+    
+    environment: ${{matrix.environment}}
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: setup databricks cli
+        uses: databricks/setup-cli@main
+
+      - name: install uv
+        run: pip install uv
+
+      - name: deploy bundle
+        env:
+          DATABRICKS_HOST: ${{secrets.DATABRICKS_HOST}}
+          DATABRICKS_TOKEN: ${{secrets.DATABRICKS_TOKEN}}
+        run: |
+          databricks bundle deploy -t ${{matrix.environment}} \
+            --var="git_sha=${{github.sha}}"\
+            --var="branch=${{github.ref_name}}"

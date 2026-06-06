@@ -1,0 +1,38 @@
+name: CI pipeline
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: setup databricks cli
+        uses: databricks/setup-cli@main
+
+      - name: validate bundle for dev 
+        env: 
+          DATABRICKS_HOST: ${{secrets.DATABRICKS_HOST}}
+          DATABRICKS_TOKEN: ${{secrets.DATABRICKS_TOKEN}}
+        run: databricks bundle validate -t dev 
+
+      - name: validate bundle for acc
+        env: 
+          DATABRICKS_HOST: ${{secrets.DATABRICKS_HOST}}
+          DATABRICKS_TOKEN: ${{secrets.DATABRICKS_TOKEN}}
+        run: databricks bundle validate -t acc
+
+      - name: validate bundle for prd
+        env: 
+          DATABRICKS_HOST: ${{secrets.DATABRICKS_HOST}}
+          DATABRICKS_TOKEN: ${{secrets.DATABRICKS_TOKEN}}
+        run: databricks bundle validate -t prd
+        
